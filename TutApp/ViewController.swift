@@ -46,10 +46,8 @@ class ViewController: UIViewController {
         if let touch = touches.first {
             
             let currentPoint = touch.locationInView(self.view)
-            path.addLineToPoint(currentPoint)
-            CreateAndReturnPathLayer(OnLayer: self.view.layer, path: path)
-           
-            
+            path.addLineToPoint(currentPoint)           
+            CreateAndReturnPathLayerOnVC(path)
         }
         
     }
