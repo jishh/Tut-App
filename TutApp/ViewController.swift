@@ -46,19 +46,19 @@ class ViewController: UIViewController {
         if let touch = touches.first {
             
             let currentPoint = touch.locationInView(self.view)
-            path.addLineToPoint(currentPoint)           
-            CreateAndReturnPathLayerOnVC(path)
+            path.addLineToPoint(currentPoint)
+            AddPathToShapeLayerAndView(BezierPath: path, WithColor: UIColor.blackColor())
         }
         
     }
     
-    func CreateAndReturnPathLayerOnVC( path:UIBezierPath){
+    func AddPathToShapeLayerAndView(BezierPath path:UIBezierPath, WithColor color:UIColor  ){
         
         pathLayer.frame =  self.view.layer.bounds
         pathLayer.bounds = self.view.layer.bounds
         pathLayer.geometryFlipped = false;
         pathLayer.path = path.CGPath;
-        pathLayer.strokeColor =  UIColor.blackColor().CGColor
+        pathLayer.strokeColor =  color.CGColor
         pathLayer.fillColor = nil
         pathLayer.lineWidth = 3.0
         pathLayer.lineJoin = kCALineJoinMiter
