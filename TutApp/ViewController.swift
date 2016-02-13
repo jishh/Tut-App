@@ -15,9 +15,13 @@ class ViewController: UIViewController {
     var path = UIBezierPath()
     var penLayer : CALayer?
     let pathLayer = CAShapeLayer()
+    var isFromQuestionLabel = false
     
-    
-    @IBOutlet var btn: UIButton!
+    @IBOutlet var questionLabel: UILabel!
+    @IBOutlet var firstAnswerLabel: UILabel!
+    @IBOutlet var secondtAnswerLabel: UILabel!
+    @IBOutlet var thirdAnswerLabel: UILabel!
+    @IBOutlet var fourthAnswerLabel: UILabel!
     
     
     
@@ -25,6 +29,8 @@ class ViewController: UIViewController {
     {
         super.viewDidLoad()
         
+        questionLabel.contentMode = .ScaleAspectFit
+        questionLabel.backgroundColor = UIColor.redColor()
     }
     override func viewDidAppear(animated: Bool) {
     }
@@ -35,22 +41,53 @@ class ViewController: UIViewController {
     
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if let touch = touches.first {
-            startPoint = touch.locationInView(self.view)
-            path.moveToPoint(startPoint)
+        
+        
+        if (touches.count == 1) // Single touches only
+        {
             
-        }
-    }
-    
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if let touch = touches.first {
-            
-            let currentPoint = touch.locationInView(self.view)
-            path.addLineToPoint(currentPoint)
-            AddPathToShapeLayerAndView(BezierPath: path, WithColor: UIColor.blackColor())
+            if let touch = touches.first {
+                startPoint = touch.locationInView(self.view)
+                
+                if (CGRectContainsPoint(questionLabel.frame, startPoint)){
+                    path.moveToPoint(startPoint)
+                    isFromQuestionLabel = true
+                    
+                }
+            }
         }
         
     }
+    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        if let touch = touches.first {
+            
+            if ( isFromQuestionLabel == true)
+            {
+                let currentPoint = touch.locationInView(self.view)
+                path.addLineToPoint(currentPoint)
+                AddPathToShapeLayerAndView(BezierPath: path, WithColor: UIColor.blackColor())
+            }
+        }
+        
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        if let touch = touches.first {
+            isFromQuestionLabel = false
+
+          //  let endPoint = touch.locationInView(self.view)
+            
+            
+        }
+        
+        
+        
+    }
+    
+    
     
     func AddPathToShapeLayerAndView(BezierPath path:UIBezierPath, WithColor color:UIColor  ){
         

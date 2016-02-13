@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,8 +17,73 @@
                     <view key="view" alpha="0.94999999999999996" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="1000" text="Question Word" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vyz-O1-sPR">
+                                <rect key="frame" x="15" y="290" width="114" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Vyz-O1-sPR" secondAttribute="height" multiplier="2:1" id="Eix-c4-0Y6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Eix-c4-0Y6"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Answer A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xgE-vB-wmf">
+                                <rect key="frame" x="517" y="230" width="73" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Answer B" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KgF-Jf-2VK">
+                                <rect key="frame" x="518" y="290" width="72" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Answer C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s8H-eB-X2E">
+                                <rect key="frame" x="517" y="350" width="73" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Answer D" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZu-AM-xRg">
+                                <rect key="frame" x="516" y="410" width="74" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Vyz-O1-sPR" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="262" id="Jc0-XF-Sz3"/>
+                            <constraint firstItem="KgF-Jf-2VK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="MUT-1r-7ev"/>
+                            <constraint firstItem="bZu-AM-xRg" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="120" id="NOk-Vo-btr"/>
+                            <constraint firstItem="bZu-AM-xRg" firstAttribute="trailing" secondItem="xgE-vB-wmf" secondAttribute="trailing" id="Phm-yl-xwO"/>
+                            <constraint firstItem="xgE-vB-wmf" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-60" id="UhC-eI-RdD"/>
+                            <constraint firstAttribute="trailing" secondItem="xgE-vB-wmf" secondAttribute="trailing" constant="10" id="XWk-2i-SLM"/>
+                            <constraint firstItem="Vyz-O1-sPR" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ZJu-Ze-m5Q"/>
+                            <constraint firstItem="s8H-eB-X2E" firstAttribute="trailing" secondItem="xgE-vB-wmf" secondAttribute="trailing" id="bLl-Mz-qyo"/>
+                            <constraint firstItem="KgF-Jf-2VK" firstAttribute="trailing" secondItem="xgE-vB-wmf" secondAttribute="trailing" id="pgw-S5-cQ9"/>
+                            <constraint firstItem="s8H-eB-X2E" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="60" id="ut0-Iz-miu"/>
+                            <constraint firstItem="Vyz-O1-sPR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="15" id="via-IA-ZJ2"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Jc0-XF-Sz3"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="firstAnswerLabel" destination="xgE-vB-wmf" id="RVw-hy-fzJ"/>
+                        <outlet property="fourthAnswerLabel" destination="bZu-AM-xRg" id="n6Y-vB-hSb"/>
+                        <outlet property="questionLabel" destination="Vyz-O1-sPR" id="1LC-K6-q9R"/>
+                        <outlet property="secondtAnswerLabel" destination="KgF-Jf-2VK" id="y0J-FN-hH9"/>
+                        <outlet property="thirdAnswerLabel" destination="s8H-eB-X2E" id="tWR-jN-v5t"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
