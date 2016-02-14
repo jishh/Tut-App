@@ -13,11 +13,11 @@ import UIKit
 
 //MARK: Selected answer id
 
- enum ChosenAnswerID  {
+enum ChosenAnswerID: Int  {
     
-    case First// slow at beginning and end
-    case Second // slow at beginning
-    case Third // slow at end
+    case First
+    case Second
+    case Third
     case Fourth
     case None
 }
@@ -132,3 +132,18 @@ func IsPointIsIncludedInFrame( Frame frame:CGRect, Point point:CGPoint)->Bool
 }
 
 
+ func showAlert(title: String, message: String) {
+    let  alert = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK")
+    alert.show()
+}
+
+
+func showHUDWithMessageAndColorInView(Message message: String, Color color:UIColor, InView view:UIView){
+    dispatch_async(dispatch_get_main_queue()) {
+        MBProgressHUD.showHUDAddedTo(view, animated: true, withText: message, andColor: color)
+    }
+}
+
+func removeHudFromView(view:UIView){
+    MBProgressHUD.hideHUDForView(view, animated: true)
+}

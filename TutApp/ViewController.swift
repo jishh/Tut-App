@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     var pathLayer:CAShapeLayer?
     var isFromQuestionLabel = false
     //var pathLayer = CAShapeLayer()
-
+    
     
     
     @IBOutlet var questionLabel: UILabel!
@@ -32,7 +32,6 @@ class ViewController: UIViewController {
     {
         super.viewDidLoad()
         setAspectFitContentModeForAllLabels()
-       // setUpPathLayer()
     }
     override func viewDidAppear(animated: Bool) {
     }
@@ -48,13 +47,11 @@ class ViewController: UIViewController {
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
-        
         if (touches.count == 1) // Single touches only
         {
             if let touch = touches.first
             {
                 StartTracingBezierPathFromTouchesBegan(touch)
-                
             }
         }
         
@@ -73,7 +70,6 @@ class ViewController: UIViewController {
         
         if let touch = touches.first
         {
-            
             CompleteDrawingOntouchesEnded(touch)
         }
         
@@ -101,22 +97,19 @@ class ViewController: UIViewController {
     
     
     func StartTracingBezierPathFromTouchesBegan(touch:UITouch){
+        
         removePathLayer()
         setUpPathLayer()
         startPoint = touch.locationInView(self.view)
         if ( IsPointIsIncludedInFrame(Frame: questionLabel.frame, Point: startPoint)){
             path.moveToPoint(startPoint)
-            isFromQuestionLabel = true
-            
+        isFromQuestionLabel = true
         }
-        
     }
     
     
     func ExecuteDrawingOntouchesMoved(touch:UITouch){
         
-        
-
         if ( isFromQuestionLabel == true)
         {
             let currentPoint = touch.locationInView(self.view)
@@ -133,9 +126,69 @@ class ViewController: UIViewController {
         isFromQuestionLabel = false
         let endPoint = touch.locationInView(self.view)
         GetChosenAnswerID(FromEndPoint: endPoint)
+        checkUserChosenAnswerWithDB()
         removePathLayer()
     }
     
+    
+    
+    
+    //MARK:     Get Ans ID After user finished touch
+    
+    func GetChosenAnswerID( FromEndPoint endTouchPoint:CGPoint)->ChosenAnswerID
+    {
+        
+        if ( IsPointIsIncludedInFrame(Frame: firstAnswerLabel.frame, Point: endTouchPoint))
+        {
+            userSelectedFirstAnswer()
+        }
+        else if ( IsPointIsIncludedInFrame(Frame: secondtAnswerLabel.frame, Point: endTouchPoint))
+        {
+            userSelectedSecondAnswer()
+        }
+            
+        else if ( IsPointIsIncludedInFrame(Frame: thirdAnswerLabel.frame, Point: endTouchPoint))
+        {
+            userSelectedThirdAnswer()
+        }
+        else if ( IsPointIsIncludedInFrame(Frame: fourthAnswerLabel.frame, Point: endTouchPoint))
+        {
+            userSelectedFourthAnswer()
+        }
+        else {
+            chosenAnswerID = .None
+        }
+        
+        return chosenAnswerID
+    }
+    
+    func userSelectedFirstAnswer(){
+        chosenAnswerID = .First
+        firstAnswerLabel.backgroundColor = UIColor.grayColor()
+    }
+    func userSelectedSecondAnswer(){
+        chosenAnswerID = .Second
+        secondtAnswerLabel.backgroundColor = UIColor.grayColor()
+        
+    }
+    func userSelectedThirdAnswer(){
+        chosenAnswerID = .Third
+        thirdAnswerLabel.backgroundColor = UIColor.grayColor()
+    }
+    func userSelectedFourthAnswer(){
+        chosenAnswerID = .Fourth
+        fourthAnswerLabel.backgroundColor = UIColor.grayColor()
+    }
+    
+    func checkUserChosenAnswerWithDB(){
+        //for now say answer b is true here. Take the correct value from db later
+        if (chosenAnswerID == .Second) {
+            showAlert("Correct Answer", message: "Congrats. You chose the right answer" )
+        }
+        else {
+            showAlert("Sorry!. wrong Answer", message: "It was wrong answer" )
+        }
+    }
     
     
     //MARK: UI
@@ -148,55 +201,15 @@ class ViewController: UIViewController {
         MakeContentModeForLabel(fourthAnswerLabel, contentMode: .ScaleAspectFit)
     }
     
-    //MARK:     Get Ans ID
-
-    func GetChosenAnswerID( FromEndPoint endTouchPoint:CGPoint)->ChosenAnswerID
-    {
-        
-        if ( IsPointIsIncludedInFrame(Frame: firstAnswerLabel.frame, Point: endTouchPoint))
-        {
-            chosenAnswerID = .First
-            firstAnswerLabel.backgroundColor = UIColor.grayColor()
-        }
-        else if ( IsPointIsIncludedInFrame(Frame: secondtAnswerLabel.frame, Point: endTouchPoint))
-        {
-            chosenAnswerID = .Second
-            secondtAnswerLabel.backgroundColor = UIColor.grayColor()
-
-        }
-            
-        else if ( IsPointIsIncludedInFrame(Frame: thirdAnswerLabel.frame, Point: endTouchPoint))
-        {
-            chosenAnswerID = .Third
-            thirdAnswerLabel.backgroundColor = UIColor.grayColor()
-
-        }
-        else if ( IsPointIsIncludedInFrame(Frame: fourthAnswerLabel.frame, Point: endTouchPoint))
-        {
-            chosenAnswerID = .Fourth
-            fourthAnswerLabel.backgroundColor = UIColor.grayColor()
-
-        }
-        else {
-            chosenAnswerID = .None
-        }
-        
-        return chosenAnswerID
-    }
-    
-    
-    
     
     func removePathLayer()
     {
-        if var pathLayerObj = pathLayer {
+        if let _ = pathLayer
+        {
             pathLayer!.removeFromSuperlayer()
- 
         }
-        
-        
-        
     }
+    
     
     
     
