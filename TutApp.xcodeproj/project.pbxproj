@@ -37,6 +37,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7B52B7D41C7016D1003335E6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		7B52B7D51C7016DA003335E6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7B874DCE1C6CFAB300ED0A2F /* Main.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		7B52B7D61C7016E6003335E6 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7B874DCC1C6CFAB300ED0A2F /* ViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 		7B874DBE1C6CFAB300ED0A2F = {
 			isa = PBXGroup;
 			children = (
@@ -56,9 +79,10 @@
 		7B874DC91C6CFAB300ED0A2F /* TutApp */ = {
 			isa = PBXGroup;
 			children = (
+				7B52B7D61C7016E6003335E6 /* Controller */,
+				7B52B7D51C7016DA003335E6 /* View */,
+				7B52B7D41C7016D1003335E6 /* Model */,
 				7B874DCA1C6CFAB300ED0A2F /* AppDelegate.swift */,
-				7B874DCC1C6CFAB300ED0A2F /* ViewController.swift */,
-				7B874DCE1C6CFAB300ED0A2F /* Main.storyboard */,
 				7B874DD11C6CFAB300ED0A2F /* Assets.xcassets */,
 				7B874DD31C6CFAB300ED0A2F /* LaunchScreen.storyboard */,
 				7B874DD61C6CFAB300ED0A2F /* Info.plist */,
@@ -290,6 +314,7 @@
 				7B874DDB1C6CFAB300ED0A2F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

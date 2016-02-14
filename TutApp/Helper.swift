@@ -10,15 +10,19 @@
 import Foundation
 import UIKit
 
-//CGContextRef context = UIGraphicsGetCurrentContext();
-//UIColor *currentColor = [UIColor blackColor];
-//CGContextSetStrokeColorWithColor(context, currentColor.CGColor);
-//CGContextSetLineWidth(context, 2.0);
-//CGContextBeginPath(context);
-//CGContextMoveToPoint(context, touchStart.x, touchStart.y);
-//CGContextAddLineToPoint(context, touchEnd.x, touchEnd.y);
-//CGContextStrokePath(context);
-//
+
+//MARK: Selected answer id
+
+ enum ChosenAnswerID  {
+    
+    case First// slow at beginning and end
+    case Second // slow at beginning
+    case Third // slow at end
+    case Fourth
+    case None
+}
+
+var chosenAnswerID = ChosenAnswerID.None
 
 
 func DrawLine( From from:CGPoint, To to:CGPoint, WithColor color:UIColor ,OnView view:UIView){
@@ -114,5 +118,17 @@ func AddAnimationToPenLayer(WithPathLayer layer:CAShapeLayer ,  ForVC viewContro
 //
 //}
 
+func MakeContentModeForLabel(label:UILabel, contentMode: UIViewContentMode){
+    label.contentMode = contentMode
+}
+//MARK: Check is point included in frame
+func IsPointIsIncludedInFrame( Frame frame:CGRect, Point point:CGPoint)->Bool
+{
+    
+    if (CGRectContainsPoint(frame, point)){
+        return true
+    }
+    return false
+}
 
 
