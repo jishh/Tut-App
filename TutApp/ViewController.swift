@@ -133,7 +133,7 @@ class ViewController: UIViewController {
     
     
     
-    //MARK:     Get Ans ID After user finished touch
+    //MARK:     Get Ans ID After user finished touch(manage user selected answer)
     
     func GetChosenAnswerID( FromEndPoint endTouchPoint:CGPoint)->ChosenAnswerID
     {
@@ -185,7 +185,7 @@ class ViewController: UIViewController {
         if (chosenAnswerID == .Second) {
             showAlert("Correct Answer", message: "Congrats. You chose the right answer" )
         }
-        else {
+        else  if (chosenAnswerID != .None){
             showAlert("Sorry!. wrong Answer", message: "It was wrong answer" )
         }
     }
