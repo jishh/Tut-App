@@ -16,8 +16,6 @@ class ViewController: UIViewController {
     var penLayer : CALayer?
     var pathLayer:CAShapeLayer?
     var isFromQuestionLabel = false
-    //var pathLayer = CAShapeLayer()
-    
     
     
     @IBOutlet var questionLabel: UILabel!
@@ -31,7 +29,8 @@ class ViewController: UIViewController {
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        setAspectFitContentModeForAllLabels()
+        setAspectFillContentModeForAllLabels()
+        // setAspectFitContentModeForAllLabels()
     }
     override func viewDidAppear(animated: Bool) {
     }
@@ -44,7 +43,7 @@ class ViewController: UIViewController {
     //MARK: touch delegates
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
+        resetAllLabels()
         if (touches.count == 1) // Single touches only
         {
             if let touch = touches.first
@@ -94,8 +93,8 @@ class ViewController: UIViewController {
     func updatePathLayerPathOnTouchMoves(BezierPath path:UIBezierPath){
         pathLayer!.path = path.CGPath
         pathLayer?.setNeedsDisplay()
-        pathLayer?.removeFromSuperlayer()
-        self.view.layer.addSublayer(pathLayer!)
+        //pathLayer?.removeFromSuperlayer()
+        //self.view.layer.addSublayer(pathLayer!)
     }
     
     func setUpPathLayer(){
@@ -107,7 +106,7 @@ class ViewController: UIViewController {
         if let _ = pathLayer
         {
             pathLayer!.removeFromSuperlayer()
-            pathLayer = nil
+            // pathLayer = nil
         }
     }
     
@@ -118,6 +117,7 @@ class ViewController: UIViewController {
     func StartTracingBezierPathFromTouchesBegan(touch:UITouch){
         
         startPoint = touch.locationInView(self.view)
+        
         if ( IsPointIsIncludedInFrame(Frame: questionLabel.frame, Point: startPoint)){
             //create path
             path = UIBezierPath()
@@ -143,13 +143,18 @@ class ViewController: UIViewController {
     
     func CompleteDrawingOntouchesEnded(touch:UITouch)
     {
-        isFromQuestionLabel = false
-        let endPoint = touch.locationInView(self.view)
-        GetChosenAnswerID(FromEndPoint: endPoint)
-        checkUserChosenAnswerWithDB()
-        //reset bezier parh and CAshapelayer on toch ending
-        path = nil
-        removePathLayer()
+        
+        if (isFromQuestionLabel == true)
+        {
+            let endPoint = touch.locationInView(self.view)
+            GetChosenAnswerID(FromEndPoint: endPoint)
+            checkUserChosenAnswerWithDB()
+            //reset bezier parh and CAshapelayer on toch ending
+            path = nil
+            removePathLayer()
+            isFromQuestionLabel = false
+        }
+        
     }
     
     
@@ -202,13 +207,15 @@ class ViewController: UIViewController {
         fourthAnswerLabel.backgroundColor = UIColor.grayColor()
     }
     
+    
     func checkUserChosenAnswerWithDB(){
         //for now say answer b is true here. Take the correct value from db later
         if (chosenAnswerID == .Second) {
-            showAlert("Correct Answer", message: "Congrats. You chose the right answer" )
+            showAlert("Correct Answer", message: "Congrats. You chose the right answer", InViewControler: self)
         }
         else  if (chosenAnswerID != .None){
-            showAlert("Sorry!. wrong Answer", message: "It was wrong answer" )
+            showAlert("Sorry!. wrong Answer", message: "It was wrong answer", InViewControler: self)
+            
         }
     }
     
@@ -223,7 +230,19 @@ class ViewController: UIViewController {
         MakeContentModeForLabel(fourthAnswerLabel, contentMode: .ScaleAspectFit)
     }
     
-    
-    
+    func setAspectFillContentModeForAllLabels(){
+        MakeContentModeForLabel(questionLabel, contentMode: .ScaleAspectFill)
+        MakeContentModeForLabel(firstAnswerLabel, contentMode: .ScaleAspectFill)
+        MakeContentModeForLabel(secondtAnswerLabel, contentMode: .ScaleAspectFill)
+        MakeContentModeForLabel(thirdAnswerLabel, contentMode: .ScaleAspectFill)
+        MakeContentModeForLabel(fourthAnswerLabel, contentMode: .ScaleAspectFill)
+    }
+    func resetAllLabels(){
+        firstAnswerLabel.backgroundColor = UIColor.clearColor()
+        secondtAnswerLabel.backgroundColor = UIColor.clearColor()
+        thirdAnswerLabel.backgroundColor = UIColor.clearColor()
+        fourthAnswerLabel.backgroundColor = UIColor.clearColor()
+        
+    }
 }
 

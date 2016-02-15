@@ -27,7 +27,7 @@ var chosenAnswerID = ChosenAnswerID.None
 
 func DrawLine( From from:CGPoint, To to:CGPoint, WithColor color:UIColor ,OnView view:UIView){
     UIGraphicsBeginImageContextWithOptions(view.frame.size, false, 0)
-   // UIGraphicsBeginImageContext(view.frame.size);
+    // UIGraphicsBeginImageContext(view.frame.size);
     let  context = UIGraphicsGetCurrentContext()
     var currentColor =  UIColor.blackColor()
     CGContextSetStrokeColorWithColor(context, currentColor.CGColor)
@@ -37,13 +37,13 @@ func DrawLine( From from:CGPoint, To to:CGPoint, WithColor color:UIColor ,OnView
     CGContextAddLineToPoint(context, to.x, to.y);
     CGContextStrokePath(context);
     
-
+    
 }
 
 
 func CreatePathLayerAndPenLayerAndAddAnimation(OnLayer layer:CALayer  ,ForVC viewController:UIViewController, ForPath  path:UIBezierPath){
     //create layers
- //   let pathLayer = CreateAndReturnPathLayer(OnLayer: layer :path)
+    //   let pathLayer = CreateAndReturnPathLayer(OnLayer: layer :path)
     
     let pathLayer = CreateAndReturnPathLayer(OnLayer: layer, path: path)
     let penLayer = CreatePenLayer(OnLayer:pathLayer )
@@ -60,7 +60,7 @@ func CreateAndReturnPathLayer(OnLayer layer:CALayer  , path:UIBezierPath)->CASha
     
     let pathLayer = CAShapeLayer()
     pathLayer.frame =  layer.bounds
-   // pathLayer.bounds =  CGPathGetBoundingBox(path.CGPath)
+    // pathLayer.bounds =  CGPathGetBoundingBox(path.CGPath)
     pathLayer.bounds = layer.bounds
     pathLayer.geometryFlipped = false;
     pathLayer.path = path.CGPath;
@@ -108,15 +108,6 @@ func AddAnimationToPenLayer(WithPathLayer layer:CAShapeLayer ,  ForVC viewContro
     
 }
 
-//func AppendCGMutablePathRefToUIBezierPath(ForString   pathString:String)->CGPath{
-//
-//
-//    let  pathCreated = attributedTextObjC.getAttributedTextPath(pathString)
-//    let path = UIBezierPath()
-//    path.moveToPoint(CGPointZero)
-//    path.appendPath(UIBezierPath(CGPath: pathCreated) )
-//
-//}
 
 func MakeContentModeForLabel(label:UILabel, contentMode: UIViewContentMode){
     label.contentMode = contentMode
@@ -132,8 +123,9 @@ func IsPointIsIncludedInFrame( Frame frame:CGRect, Point point:CGPoint)->Bool
 }
 
 
- func showAlert(title: String, message: String) {
+func showAlert(title: String, message: String, InViewControler VC:UIViewController) {
     let  alert = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK")
+    alert.delegate = VC
     alert.show()
 }
 
