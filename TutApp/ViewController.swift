@@ -40,9 +40,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func setUpPathLayer(){
-        pathLayer = CAShapeLayer()
-    }
+  
     //MARK: touch delegates
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -89,20 +87,35 @@ class ViewController: UIViewController {
         pathLayer!.fillColor = nil
         pathLayer!.lineWidth = 3.0
         pathLayer!.lineJoin = kCALineJoinMiter
+          //pathLayer?.removeFromSuperlayer()
         self.view.layer.addSublayer(pathLayer!)
         
     }
     
+    func chnageShapeLayerPath(BezierPath path:UIBezierPath){
+      // pathLayer?.didChangeValueForKey("path")
+         pathLayer!.path = path.CGPath
+        pathLayer?.setNeedsDisplay()
+        pathLayer?.removeFromSuperlayer()
+        self.view.layer.addSublayer(pathLayer!)
+    }
+    func setUpPathLayer(){
+        
+        pathLayer = CAShapeLayer()
+        
+    }
     //MARK: Touch logic for drawing
     
     
     func StartTracingBezierPathFromTouchesBegan(touch:UITouch){
-        
-        removePathLayer()
-        setUpPathLayer()
+    
         startPoint = touch.locationInView(self.view)
         if ( IsPointIsIncludedInFrame(Frame: questionLabel.frame, Point: startPoint)){
+            
+            
             path.moveToPoint(startPoint)
+            
+             AddPathToShapeLayerAndView(BezierPath: path, WithColor: UIColor.blackColor())
         isFromQuestionLabel = true
         }
     }
@@ -114,7 +127,8 @@ class ViewController: UIViewController {
         {
             let currentPoint = touch.locationInView(self.view)
             path.addLineToPoint(currentPoint)
-            AddPathToShapeLayerAndView(BezierPath: path, WithColor: UIColor.blackColor())
+            chnageShapeLayerPath(BezierPath:path)
+           // AddPathToShapeLayerAndView(BezierPath: path, WithColor: UIColor.blackColor())
         }
         
         
@@ -127,7 +141,7 @@ class ViewController: UIViewController {
         let endPoint = touch.locationInView(self.view)
         GetChosenAnswerID(FromEndPoint: endPoint)
         checkUserChosenAnswerWithDB()
-        removePathLayer()
+       // removePathLayer()
     }
     
     
@@ -207,6 +221,8 @@ class ViewController: UIViewController {
         if let _ = pathLayer
         {
             pathLayer!.removeFromSuperlayer()
+            pathLayer = nil
+           // path = 0
         }
     }
     
