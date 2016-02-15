@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     
     var startPoint = CGPoint()
     var animationLayer = CALayer()
-    var path = UIBezierPath()
+    var path: UIBezierPath?
     var penLayer : CALayer?
     var pathLayer:CAShapeLayer?
     var isFromQuestionLabel = false
@@ -40,7 +40,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-  
+    
     //MARK: touch delegates
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -76,7 +76,7 @@ class ViewController: UIViewController {
     //MARK: Draw Line From  Question To Answer
     
     
-    func AddPathToShapeLayerAndView(BezierPath path:UIBezierPath, WithColor color:UIColor  ){
+    func AddPathToPathLayerAndView(BezierPath path:UIBezierPath, WithColor color:UIColor  ){
         removePathLayer()
         setUpPathLayer()
         pathLayer!.frame =  self.view.layer.bounds
@@ -87,36 +87,43 @@ class ViewController: UIViewController {
         pathLayer!.fillColor = nil
         pathLayer!.lineWidth = 3.0
         pathLayer!.lineJoin = kCALineJoinMiter
-          //pathLayer?.removeFromSuperlayer()
         self.view.layer.addSublayer(pathLayer!)
         
     }
     
-    func chnageShapeLayerPath(BezierPath path:UIBezierPath){
-      // pathLayer?.didChangeValueForKey("path")
-         pathLayer!.path = path.CGPath
+    func updatePathLayerPathOnTouchMoves(BezierPath path:UIBezierPath){
+        pathLayer!.path = path.CGPath
         pathLayer?.setNeedsDisplay()
         pathLayer?.removeFromSuperlayer()
         self.view.layer.addSublayer(pathLayer!)
     }
+    
     func setUpPathLayer(){
-        
         pathLayer = CAShapeLayer()
-        
     }
+    
+    func removePathLayer()
+    {
+        if let _ = pathLayer
+        {
+            pathLayer!.removeFromSuperlayer()
+            pathLayer = nil
+        }
+    }
+    
+    
     //MARK: Touch logic for drawing
     
     
     func StartTracingBezierPathFromTouchesBegan(touch:UITouch){
-    
+        
         startPoint = touch.locationInView(self.view)
         if ( IsPointIsIncludedInFrame(Frame: questionLabel.frame, Point: startPoint)){
-            
-            
-            path.moveToPoint(startPoint)
-            
-             AddPathToShapeLayerAndView(BezierPath: path, WithColor: UIColor.blackColor())
-        isFromQuestionLabel = true
+            //create path
+            path = UIBezierPath()
+            path!.moveToPoint(startPoint)
+            AddPathToPathLayerAndView(BezierPath: path!, WithColor: UIColor.blackColor())
+            isFromQuestionLabel = true
         }
     }
     
@@ -126,9 +133,8 @@ class ViewController: UIViewController {
         if ( isFromQuestionLabel == true)
         {
             let currentPoint = touch.locationInView(self.view)
-            path.addLineToPoint(currentPoint)
-            chnageShapeLayerPath(BezierPath:path)
-           // AddPathToShapeLayerAndView(BezierPath: path, WithColor: UIColor.blackColor())
+            path!.addLineToPoint(currentPoint)
+            updatePathLayerPathOnTouchMoves(BezierPath:path!)
         }
         
         
@@ -141,7 +147,9 @@ class ViewController: UIViewController {
         let endPoint = touch.locationInView(self.view)
         GetChosenAnswerID(FromEndPoint: endPoint)
         checkUserChosenAnswerWithDB()
-       // removePathLayer()
+        //reset bezier parh and CAshapelayer on toch ending
+        path = nil
+        removePathLayer()
     }
     
     
@@ -214,18 +222,6 @@ class ViewController: UIViewController {
         MakeContentModeForLabel(thirdAnswerLabel, contentMode: .ScaleAspectFit)
         MakeContentModeForLabel(fourthAnswerLabel, contentMode: .ScaleAspectFit)
     }
-    
-    
-    func removePathLayer()
-    {
-        if let _ = pathLayer
-        {
-            pathLayer!.removeFromSuperlayer()
-            pathLayer = nil
-           // path = 0
-        }
-    }
-    
     
     
     
